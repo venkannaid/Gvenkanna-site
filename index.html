@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. G. Venkanna — Faculty Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F6F2E8;
+  --paper-deep:#EFE9DA;
+  --ink:#182339;
+  --ink-soft:#4B5670;
+  --brass:#9C7A3C;
+  --brass-deep:#7C5F2C;
+  --brass-pale:#EADFC5;
+  --card:#FFFFFF;
+  --line:#DCD3BE;
+  --danger:#A0402A;
+  --danger-soft:#F3E1DB;
+  --good:#2F6F4E;
+  --shadow: 0 1px 2px rgba(24,35,57,.06), 0 6px 20px rgba(24,35,57,.07);
+  --radius: 3px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.serif{font-family:'Source Serif 4',serif;}
+.mono{font-family:'JetBrains Mono',monospace;}
+a{color:var(--brass-deep);}
+
+.app{display:flex;min-height:100vh;}
+
+/* ---------- Sidebar / Ledger rail ---------- */
+.rail{
+  width:250px;
+  flex-shrink:0;
+  background:var(--ink);
+  color:#EDE7D6;
+  display:flex;
+  flex-direction:column;
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+}
+.rail-head{
+  padding:28px 22px 18px;
+  border-bottom:1px solid rgba(237,231,214,.14);
+}
+.rail-head .mark{
+  width:38px;height:38px;border:1px solid var(--brass);
+  color:var(--brass-pale);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Source Serif 4',serif;font-weight:700;font-size:16px;
+  border-radius:50%;
+  margin-bottom:10px;
+}
+.rail-head .name{font-family:'Source Serif 4',serif;font-size:17px;font-weight:600;line-height:1.3;}
+.rail-head .role{font-size:11.5px;color:#B9B196;margin-top:4px;letter-spacing:.02em;}
+
+.nav{list-style:none;margin:0;padding:10px 0;flex:1;}
+.nav li{margin:0;}
+.nav button{
+  width:100%;text-align:left;background:none;border:none;color:#CFC8B2;
+  padding:10px 22px;font-family:'Inter',sans-serif;font-size:13.5px;cursor:pointer;
+  display:flex;align-items:center;gap:12px;
+  border-left:2px solid transparent;
+  transition:background .15s, color .15s, border-color .15s;
+}
+.nav button .idx{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#8A8368;width:18px;}
+.nav button:hover{background:rgba(237,231,214,.06);color:#EDE7D6;}
+.nav button.active{background:rgba(156,122,60,.18);color:#F3EBD6;border-left-color:var(--brass);font-weight:500;}
+.nav button.active .idx{color:var(--brass-pale);}
+
+.rail-foot{padding:16px 22px 22px;border-top:1px solid rgba(237,231,214,.14);}
+.edit-toggle{
+  width:100%;padding:9px 10px;border-radius:2px;border:1px solid rgba(237,231,214,.3);
+  background:transparent;color:#EDE7D6;font-size:12px;cursor:pointer;font-family:'Inter',sans-serif;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.edit-toggle.on{background:var(--brass);border-color:var(--brass);color:#1a1305;font-weight:600;}
+.rail-foot .hint{font-size:10.5px;color:#8A8368;margin-top:8px;line-height:1.5;}
+.data-btns{display:flex;gap:6px;margin-top:10px;}
+.data-btns button{flex:1;background:none;border:1px solid rgba(237,231,214,.22);color:#B9B196;font-size:10px;padding:6px 4px;border-radius:2px;cursor:pointer;font-family:'Inter',sans-serif;}
+.data-btns button:hover{color:#EDE7D6;border-color:rgba(237,231,214,.5);}
+
+/* ---------- Stage ---------- */
+.stage{flex:1;min-width:0;padding:44px 56px 100px;max-width:980px;}
+.pane{display:none;animation:fade .25s ease;}
+.pane.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--brass-deep);margin:0 0 8px;
+  display:flex;align-items:center;gap:10px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--brass);}
+.pane h1.title{font-size:30px;margin:0 0 6px;font-weight:600;}
+.pane .lede{color:var(--ink-soft);font-size:14.5px;max-width:640px;line-height:1.6;margin-bottom:34px;}
+
+/* Home hero */
+.hero-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:38px 40px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+}
+.hero-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--brass);}
+.hero-top{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap;}
+.avatar{
+  width:84px;height:84px;border-radius:50%;background:var(--ink);color:var(--brass-pale);
+  display:flex;align-items:center;justify-content:center;font-family:'Source Serif 4',serif;
+  font-size:30px;font-weight:600;flex-shrink:0;border:3px solid var(--brass-pale);
+}
+.hero-name{font-family:'Source Serif 4',serif;font-size:28px;font-weight:700;margin:0 0 4px;}
+.hero-role{color:var(--brass-deep);font-weight:600;font-size:14.5px;margin-bottom:3px;}
+.hero-inst{color:var(--ink-soft);font-size:13.5px;margin-bottom:14px;}
+.hero-tag{font-size:13.5px;font-style:italic;color:var(--ink-soft);border-left:2px solid var(--brass-pale);padding-left:12px;}
+.stat-row{display:flex;gap:0;margin-top:30px;border-top:1px solid var(--line);padding-top:22px;flex-wrap:wrap;}
+.stat{padding:0 26px;border-right:1px solid var(--line);}
+.stat:first-child{padding-left:0;}
+.stat:last-child{border-right:none;}
+.stat .num{font-family:'Source Serif 4',serif;font-size:26px;font-weight:700;color:var(--ink);}
+.stat .lbl{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:2px;}
+.home-links{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;}
+.pill-link{
+  font-size:12.5px;padding:8px 14px;border:1px solid var(--line);border-radius:20px;
+  color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:var(--paper);
+}
+.pill-link:hover{border-color:var(--brass);color:var(--brass-deep);}
+
+/* Generic section header w/ edit button */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.sec-head h2{font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin:0;font-family:'Inter',sans-serif;font-weight:600;}
+.btn{
+  font-family:'Inter',sans-serif;font-size:12px;padding:7px 13px;border-radius:2px;cursor:pointer;
+  border:1px solid var(--line);background:var(--card);color:var(--ink);
+}
+.btn:hover{border-color:var(--brass);color:var(--brass-deep);}
+.btn.primary{background:var(--ink);color:#EDE7D6;border-color:var(--ink);}
+.btn.primary:hover{background:var(--brass-deep);border-color:var(--brass-deep);color:#fff;}
+.btn.danger{color:var(--danger);border-color:var(--danger-soft);}
+.btn.danger:hover{background:var(--danger-soft);}
+.btn.ghost{border-color:transparent;background:transparent;}
+.btn.sm{padding:4px 9px;font-size:11px;}
+
+/* Cards used across list-based sections */
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:20px 22px;margin-bottom:12px;position:relative;box-shadow:var(--shadow);
+}
+.card .card-actions{position:absolute;top:14px;right:14px;display:none;gap:6px;}
+.card:hover .card-actions{display:flex;}
+.card-actions button{
+  width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:var(--paper);
+  cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;
+}
+.card-actions button:hover{border-color:var(--brass);}
+.card-actions button.del:hover{border-color:var(--danger);color:var(--danger);}
+.tag{
+  display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.04em;
+  padding:2px 8px;border-radius:20px;margin-right:6px;font-weight:500;
+}
+.tag.sci{background:#E7EFE9;color:var(--good);}
+.tag.scopus{background:var(--brass-pale);color:var(--brass-deep);}
+.tag.other{background:#EEE;color:#666;}
+.card h3{margin:0 0 6px;font-size:15.5px;font-family:'Source Serif 4',serif;font-weight:600;line-height:1.4;}
+.card .meta{font-size:12.5px;color:var(--ink-soft);}
+.card .sub{font-size:12px;color:var(--brass-deep);margin-top:4px;font-weight:500;}
+.card .doi{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);margin-top:6px;}
+
+.chip-row{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{
+  background:var(--card);border:1px solid var(--line);padding:7px 14px;border-radius:20px;font-size:12.5px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.chip .x{cursor:pointer;color:var(--danger);font-weight:700;display:none;}
+.editing .chip .x{display:inline;}
+.chip-add{border:1px dashed var(--brass);color:var(--brass-deep);background:none;cursor:pointer;font-size:12.5px;padding:7px 14px;border-radius:20px;}
+
+.stat-card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px;text-align:center;
+  box-shadow:var(--shadow);position:relative;
+}
+.stat-card .num{font-family:'Source Serif 4',serif;font-size:32px;font-weight:700;color:var(--brass-deep);}
+.stat-card .lbl{font-size:12px;color:var(--ink-soft);margin-top:4px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+.empty{
+  border:1px dashed var(--line);border-radius:var(--radius);padding:30px;text-align:center;color:var(--ink-soft);
+  font-size:13px;
+}
+
+table.info-table{width:100%;border-collapse:collapse;}
+table.info-table td{padding:11px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
+table.info-table td:first-child{color:var(--ink-soft);width:220px;}
+table.info-table td:last-child{font-weight:500;}
+
+.subsection{margin-top:34px;}
+.subsection .sub-title{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--brass-deep);margin-bottom:14px;font-weight:600;}
+
+/* ---------- Modal ---------- */
+.overlay{position:fixed;inset:0;background:rgba(22,30,49,.55);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px;}
+.modal{
+  background:var(--paper);border-radius:4px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.modal-head{padding:20px 26px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;}
+.modal-head h3{margin:0;font-size:16px;font-family:'Source Serif 4',serif;}
+.modal-head .close{cursor:pointer;font-size:18px;color:var(--ink-soft);background:none;border:none;}
+.modal-body{padding:22px 26px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);margin-bottom:6px;font-weight:600;}
+.field input,.field textarea,.field select{
+  width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:2px;font-family:'Inter',sans-serif;
+  font-size:13.5px;background:#fff;color:var(--ink);
+}
+.field textarea{min-height:80px;resize:vertical;}
+.modal-foot{padding:16px 26px 22px;display:flex;justify-content:flex-end;gap:10px;}
+
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#EDE7D6;
+  padding:11px 22px;border-radius:20px;font-size:12.5px;box-shadow:var(--shadow);z-index:200;
+  opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+
+footer.site-foot{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:11.5px;color:var(--ink-soft);}
+
+@media (max-width:860px){
+  .rail{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);z-index:90;transition:transform .2s;}
+  .rail.open{transform:translateX(0);}
+  .stage{padding:24px 20px 90px;}
+  .grid2,.grid3{grid-template-columns:1fr;}
+  .mobile-bar{display:flex;}
+}
+.mobile-bar{display:none;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--ink);color:#EDE7D6;position:sticky;top:0;z-index:80;}
+.mobile-bar button{background:none;border:1px solid rgba(237,231,214,.35);color:#EDE7D6;padding:6px 10px;border-radius:2px;font-size:12px;}
+</style>
+</head>
+<body>
+
+<div class="mobile-bar">
+  <strong style="font-family:'Source Serif 4',serif;">Dr. G. Venkanna</strong>
+  <button onclick="document.querySelector('.rail').classList.toggle('open')">☰ Menu</button>
+</div>
+
+<div class="app">
+  <aside class="rail">
+    <div class="rail-head">
+      <div class="mark">GV</div>
+      <div class="name" id="railName">Dr. G. Venkanna</div>
+      <div class="role" id="railRole">Associate Professor, CSE</div>
+    </div>
+    <ul class="nav" id="navList"></ul>
+    <div class="rail-foot">
+      <button class="edit-toggle" id="editToggleBtn" onclick="toggleEdit()">✎ Turn on Edit Mode</button>
+      <div class="hint">Edit Mode reveals Add / Update / Delete controls on every section. Changes save automatically to this browser.</div>
+      <div class="data-btns">
+        <button onclick="exportData()">Export JSON</button>
+        <button onclick="importPrompt()">Import JSON</button>
+        <button onclick="resetPrompt()">Reset</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="stage" id="stage"></main>
+</div>
+
+<div id="modalRoot"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================================================
+   DATA LAYER
+   ========================================================= */
+const STORAGE_KEY = 'facultySiteData_v1';
+
+const DEFAULT_DATA = {
+  profile: {
+    name: "Dr. G. Venkanna",
+    designation: "Associate Professor",
+    department: "Department of Computer Science & Engineering",
+    institution: "Sreenidhi Institute of Engineering and Technology (Autonomous), Hyderabad",
+    tagline: "Text Document Clustering • Machine Learning • IoT • Cloud Computing",
+    experienceYears: "18+",
+    photoInitials: "GV"
+  },
+  about: {
+    bio: "Motivated academic professional with 18+ years of energetic, dynamic teaching and research experience across reputed engineering institutions. Strong record of building relationships with students and parents, guiding project work, and driving measurable academic outcomes. Research-oriented with expertise spanning text document clustering, machine learning, IoT and cloud computing, combined with a growth-driven approach to higher-education strategy and human resource development.",
+    skills: [
+      { id: 1, text: "Strong logical and analytical problem-solving ability" },
+      { id: 2, text: "Excellent communication and interpersonal skills" },
+      { id: 3, text: "Detail-oriented, industrious and punctual" }
+    ]
+  },
+  education: [
+    { id:1, degree:"Ph.D.", field:"Computer Science & Engineering", institution:"Jawaharlal Nehru Technological University, Anantapur", year:"2024", note:"Thesis: \"Text Document Clustering Using Centroid and Neighborhood Approaches\"" },
+    { id:2, degree:"M.Tech", field:"Computer Science & Engineering", institution:"National Institute of Technology, Warangal", year:"2008", note:"" },
+    { id:3, degree:"B.Tech", field:"Computer Science & Engineering", institution:"Sai Spurthi Institute of Technology (affiliated to JNTU)", year:"2005", note:"" },
+    { id:4, degree:"Intermediate (M.P.C)", field:"", institution:"Pragathi Junior College, Khammam", year:"2001", note:"" },
+    { id:5, degree:"S.S.C", field:"", institution:"ZPPS Thanikella, Khammam", year:"1998", note:"" }
+  ],
+  teachingPositions: [
+    { id:1, role:"Associate Professor, CSE Dept.", institution:"Sreenidhi Institute of Engineering and Technology (Autonomous), Hyderabad", duration:"Jan 2023 – Present" },
+    { id:2, role:"Assistant Professor", institution:"Netaji Institute of Engineering & Technology, Toopranpet, Chotuppal", duration:"Jul 2013 – Jan 2023" },
+    { id:3, role:"Assistant Professor", institution:"Noble College of Engineering & Technology for Women, Nadargul, Hyderabad", duration:"Jun 2009 – Jun 2013" },
+    { id:4, role:"Assistant Professor, IT Dept.", institution:"Vijaya Engineering College, Ammapalem, Khammam", duration:"Jun 2008 – May 2009" }
+  ],
+  subjects: [
+    { id:1, text:"Computer Programming" },
+    { id:2, text:"Data Structures using C" },
+    { id:3, text:"Object Oriented Analysis & Design" },
+    { id:4, text:"Advanced Data Structures" },
+    { id:5, text:"Design and Analysis of Algorithms" },
+    { id:6, text:"Software Automation Testing" }
+  ],
+  researchInterests: [
+    { id:1, text:"Text Document Clustering" },
+    { id:2, text:"Machine Learning" },
+    { id:3, text:"Deep Learning" },
+    { id:4, text:"IoT & Edge Computing" },
+    { id:5, text:"Cloud Computing" },
+    { id:6, text:"Big Data Analytics" },
+    { id:7, text:"Data Mining" },
+    { id:8, text:"Cyber Security" }
+  ],
+  publications: [
+    { id:1, title:"IoT-Integrated Predictive Healthcare Systems for Elderly Patient Monitoring Using Machine Learning and Cloud Computing", venue:"Genetics and Molecular Research", details:"vol. 64, no. 6, pp. 1–23, 2026", doi:"10.1093/comjnl/bxab013", type:"SCI" },
+    { id:2, title:"Automated Domain Analysis for Software Reuse Using Package Abstractions and Generics", venue:"Journal of Theoretical and Applied Information Technology", details:"vol. 104, no. 11, pp. 141–149, 2026", doi:"", type:"Scopus" },
+    { id:3, title:"Optimal Text Document Clustering Enabled by Weighted Similarity Oriented Jaya with Grey Wolf Optimization Algorithm", venue:"The Computer Journal", details:"vol. 64, no. 6, pp. 960–972, 2021", doi:"10.1093/comjnl/bxab013", type:"SCI" },
+    { id:4, title:"Improved Meta-Heuristic Model for Text Document Clustering by Adaptive Weighted Similarity", venue:"Int. J. of Uncertainty, Fuzziness and Knowledge-Based Systems", details:"vol. 31, no. 5, pp. 749–771, 2023", doi:"10.1142/S0218488523500356", type:"SCI" },
+    { id:5, title:"A Hybrid Approach for Generative Process Model with Topic Modelling Towards Efficient and Dynamic Document Clustering", venue:"Int. J. of Advanced Technology and Engineering Exploration", details:"vol. 10, no. 106, pp. 1184–1197, 2023", doi:"10.19101/IJATEE.2023.10101071", type:"Scopus" },
+    { id:6, title:"Decentralized Crop Recommendation System for Farmers Using Smart Contracts and Blockchain Technology", venue:"International Research Journal of Modernization in Engineering Technology and Science", details:"vol. 06, issue 04, Apr 2024", doi:"10.56726/IRJMETS54044", type:"Other" },
+    { id:7, title:"Ensemble Model for Exploratory Data Analysis and Prediction of Cardiomyopathy", venue:"IJIEMR", details:"vol. 13, issue 04, Apr 2024, ISSN 2456-5083", doi:"", type:"Other" },
+    { id:8, title:"An Efficient Approach for Text Document Clustering Using Centroids and Neighbors", venue:"IJRACSE", details:"vol. 2, issue 11, Apr 2017, ISSN 2454-423X", doi:"", type:"Other" },
+    { id:9, title:"An Approach for Clustering the Documents Using Centroids", venue:"IJR", details:"vol. 04, issue 06, May 2017, p-ISSN 2348-6848", doi:"", type:"Other" },
+    { id:10, title:"A Study of Comparison Between Different Types of Document Clustering Techniques in Data Mining", venue:"", details:"", doi:"", type:"Other" },
+    { id:11, title:"Distributed and Secure Data Storing and Retrieving in Multicloud Storage with Identity Based Cryptosystem", venue:"IJMETMR", details:"vol. 2, issue 11, ISSN 2348-4845", doi:"", type:"Other" }
+  ],
+  conferences: [
+    { id:1, title:"International Conference on Data, Energy and Communication Networks (DECoN) — IEEE", place:"", date:"12–13 Dec 2025" },
+    { id:2, title:"National Conference on Innovation in Communication and Computing Networks – 2024", place:"SNIST, Hyderabad", date:"19–20 Apr 2024" },
+    { id:3, title:"International Conference on Emerging Trends and Technologies – 2024", place:"", date:"8–9 Nov 2024" },
+    { id:4, title:"Co-Convener, Explore 2k12 National Level Symposium", place:"", date:"Feb 2012" },
+    { id:5, title:"Co-Convener, Explore 2k11 National Level Symposium", place:"", date:"Mar 2011" }
+  ],
+  projectStats: { btech:50, mtech:20 },
+  projects: [
+    { id:1, title:"Artificial Intelligent Framework System for Smart City Prediction using Big Data Analytics", type:"Patent", detail:"Filed 01/03/2022 · Published 11/03/2022 · Application No. 202241011082" }
+  ],
+  awards: [
+    { id:1, title:"GATE 2006 — 96 percentile, All-India Rank 750", year:"2006" },
+    { id:2, title:"FET (Faculty Eligibility Test) Qualified", year:"2010" },
+    { id:3, title:"TS SET Qualified", year:"2016" },
+    { id:4, title:"Patent Published — Smart City Prediction Framework", year:"2022" },
+    { id:5, title:"Academic results above 90% produced every semester", year:"" },
+    { id:6, title:"100% result in Python Programming and OOAD", year:"" }
+  ],
+  fdps: [
+    { id:1, text:"Big Data – Hadoop Eco Systems", place:"CMRIT, Hyderabad", date:"27–31 May 2020" },
+    { id:2, text:"Basics of R Programming", place:"Rajiv Gandhi University (with IIT Bombay)", date:"29 Apr – 3 May 2020" },
+    { id:3, text:"Open Source Technologies", place:"NITTTR / SNIST, Hyderabad", date:"24–28 Apr 2023" },
+    { id:4, text:"Data Visualization using Tableau", place:"MLRIT, Hyderabad", date:"24–28 Jul 2023" },
+    { id:5, text:"Protection from Cyber Attacks", place:"NITTTR / SNIST, Hyderabad", date:"7–11 Aug 2023" },
+    { id:6, text:"Innovative Teaching Learning Methodologies", place:"SNIST, Hyderabad", date:"25–30 Sep 2023" },
+    { id:7, text:"IoT and its Applications", place:"NITTTR / SNIST, Hyderabad", date:"6–10 Nov 2023" },
+    { id:8, text:"Data Science using Python", place:"NITTTR / SNIST, Hyderabad", date:"19–23 Feb 2024" },
+    { id:9, text:"Deep Learning for Engineering Applications", place:"NITTTR / SNIST, Hyderabad", date:"2–9 Sep 2024" },
+    { id:10, text:"Cryptography and Network Security", place:"NITTTR / SNIST, Hyderabad", date:"16–20 Sep 2024" },
+    { id:11, text:"Data Analysis of Cyber Attacks through ML and Deep Learning", place:"NITTTR / SNIST, Hyderabad", date:"25–29 Nov 2024" }
+  ],
+  scholar: {
+    scopusId: "57225007900",
+    researcherId: "LWK-5330-2024",
+    orcid: "0009-0002-0232-1898",
+    googleScholarUrl: "",
+    citations: "0",
+    hIndex: "0",
+    i10Index: "0"
+  },
+  contact: {
+    email: "venkannaid@gmail.com",
+    phone: "9000915911",
+    address: "H.No: 6-4-321/104, HIG Phase-4, Vansthalipuram, Near Ganesh Temple, Hyderabad, Telangana, India – 500070",
+    github: "",
+    linkedin: "",
+    resumeUrl: "resume.pdf"
+  }
+};
+
+function loadData(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw) return JSON.parse(raw);
+  }catch(e){ console.warn('Could not load saved data, using defaults', e); }
+  return JSON.parse(JSON.stringify(DEFAULT_DATA));
+}
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(DATA));
+  showToast('Saved');
+}
+let DATA = loadData();
+let editMode = false;
+let currentTab = 'home';
+
+function nextId(arr){ return arr.length ? Math.max(...arr.map(x=>x.id))+1 : 1; }
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'), 1400);
+}
+
+/* =========================================================
+   NAV
+   ========================================================= */
+const TABS = [
+  {id:'home', label:'Home'},
+  {id:'about', label:'About Me'},
+  {id:'education', label:'Education'},
+  {id:'teaching', label:'Teaching Experience'},
+  {id:'research', label:'Research Interests'},
+  {id:'publications', label:'Publications'},
+  {id:'conferences', label:'Conference Papers'},
+  {id:'projects', label:'Projects & Patents'},
+  {id:'awards', label:'Awards & Achievements'},
+  {id:'scholar', label:'Google Scholar Profile'},
+  {id:'contact', label:'Contact & Resume'}
+];
+
+function renderNav(){
+  const nav = document.getElementById('navList');
+  nav.innerHTML = TABS.map((t,i)=>`
+    <li><button class="${t.id===currentTab?'active':''}" onclick="switchTab('${t.id}')">
+      <span class="idx">${String(i+1).padStart(2,'0')}</span>${t.label}
+    </button></li>`).join('');
+}
+function switchTab(id){
+  currentTab = id;
+  renderNav();
+  renderStage();
+  document.querySelector('.rail').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleEdit(){
+  editMode = !editMode;
+  const btn = document.getElementById('editToggleBtn');
+  btn.classList.toggle('on', editMode);
+  btn.textContent = editMode ? '✓ Editing — click to finish' : '✎ Turn on Edit Mode';
+  renderStage();
+}
+
+/* =========================================================
+   MODAL ENGINE
+   ========================================================= */
+function openModal(title, fields, values, onSave){
+  const root = document.getElementById('modalRoot');
+  const fieldHtml = fields.map(f=>{
+    const val = (values && values[f.key] !== undefined) ? values[f.key] : '';
+    if(f.type==='textarea'){
+      return `<div class="field"><label>${f.label}</label><textarea data-key="${f.key}">${escapeHtml(val)}</textarea></div>`;
+    }
+    if(f.type==='select'){
+      const opts = f.options.map(o=>`<option value="${o}" ${o===val?'selected':''}>${o}</option>`).join('');
+      return `<div class="field"><label>${f.label}</label><select data-key="${f.key}">${opts}</select></div>`;
+    }
+    return `<div class="field"><label>${f.label}</label><input type="text" data-key="${f.key}" value="${escapeAttr(val)}"></div>`;
+  }).join('');
+
+  root.innerHTML = `
+    <div class="overlay" id="overlayEl">
+      <div class="modal">
+        <div class="modal-head"><h3>${title}</h3><button class="close" onclick="closeModal()">✕</button></div>
+        <div class="modal-body">${fieldHtml}</div>
+        <div class="modal-foot">
+          <button class="btn" onclick="closeModal()">Cancel</button>
+          <button class="btn primary" id="modalSaveBtn">Save</button>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('overlayEl').addEventListener('click', e=>{ if(e.target.id==='overlayEl') closeModal(); });
+  document.getElementById('modalSaveBtn').addEventListener('click', ()=>{
+    const out = {};
+    fields.forEach(f=>{
+      const el = root.querySelector(`[data-key="${f.key}"]`);
+      out[f.key] = el.value.trim();
+    });
+    onSave(out);
+    closeModal();
+  });
+}
+function closeModal(){ document.getElementById('modalRoot').innerHTML = ''; }
+function escapeHtml(s){ return String(s??'').replace(/[&<>]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])); }
+function escapeAttr(s){ return String(s??'').replace(/"/g,'&quot;'); }
+
+function confirmDelete(msg, cb){
+  if(confirm(msg)) cb();
+}
+
+/* =========================================================
+   RENDER: STAGE ROUTER
+   ========================================================= */
+function renderStage(){
+  const el = document.getElementById('stage');
+  document.body.classList.toggle('editing', editMode);
+  const renderers = {
+    home: renderHome, about: renderAbout, education: renderEducation,
+    teaching: renderTeaching, research: renderResearch, publications: renderPublications,
+    conferences: renderConferences, projects: renderProjects, awards: renderAwards,
+    scholar: renderScholar, contact: renderContact
+  };
+  el.innerHTML = renderers[currentTab]();
+  el.classList.add('active');
+  document.getElementById('railName').textContent = DATA.profile.name;
+  document.getElementById('railRole').textContent = DATA.profile.designation + ', CSE';
+}
+
+/* ---------- HOME ---------- */
+function renderHome(){
+  const p = DATA.profile;
+  const pubCount = DATA.publications.length;
+  const editBtn = editMode ? `<button class="btn sm" style="position:absolute;top:16px;right:16px;" onclick="editProfile()">✎ Edit Profile</button>` : '';
+  return `
+    <div class="eyebrow">01 · Home</div>
+    <div class="hero-card">
+      ${editBtn}
+      <div class="hero-top">
+        <div class="avatar">${escapeHtml(p.photoInitials||'??')}</div>
+        <div>
+          <h1 class="hero-name">${escapeHtml(p.name)}</h1>
+          <div class="hero-role">${escapeHtml(p.designation)} · ${escapeHtml(p.department)}</div>
+          <div class="hero-inst">${escapeHtml(p.institution)}</div>
+          <div class="hero-tag">${escapeHtml(p.tagline)}</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="num">${escapeHtml(p.experienceYears)}</div><div class="lbl">Years Experience</div></div>
+        <div class="stat"><div class="num">${pubCount}</div><div class="lbl">Publications</div></div>
+        <div class="stat"><div class="num">${DATA.projectStats.btech + DATA.projectStats.mtech}</div><div class="lbl">Projects Guided</div></div>
+        <div class="stat"><div class="num">${DATA.education.length}</div><div class="lbl">Degrees</div></div>
+      </div>
+      <div class="home-links">
+        ${DATA.contact.github ? `<a class="pill-link" href="${DATA.contact.github}" target="_blank">GitHub ↗</a>` : ''}
+        ${DATA.contact.linkedin ? `<a class="pill-link" href="${DATA.contact.linkedin}" target="_blank">LinkedIn ↗</a>` : ''}
+        ${DATA.scholar.googleScholarUrl ? `<a class="pill-link" href="${DATA.scholar.googleScholarUrl}" target="_blank">Google Scholar ↗</a>` : ''}
+        <a class="pill-link" href="https://orcid.org/${DATA.scholar.orcid}" target="_blank">ORCID ↗</a>
+        ${DATA.contact.resumeUrl ? `<a class="pill-link" href="${DATA.contact.resumeUrl}" target="_blank">Download Resume ↓</a>` : ''}
+      </div>
+    </div>
+  `;
+}
+function editProfile(){
+  openModal('Edit Profile', [
+    {key:'name', label:'Full Name'},
+    {key:'designation', label:'Designation'},
+    {key:'department', label:'Department'},
+    {key:'institution', label:'Institution'},
+    {key:'tagline', label:'Tagline'},
+    {key:'experienceYears', label:'Years of Experience (e.g. 18+)'},
+    {key:'photoInitials', label:'Avatar Initials (2 letters)'}
+  ], DATA.profile, (vals)=>{ DATA.profile = {...DATA.profile, ...vals}; saveData(); renderStage(); });
+}
+
+/* ---------- ABOUT ---------- */
+function renderAbout(){
+  const skillsList = DATA.about.skills.map(s=>`
+    <li style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+      <span>${escapeHtml(s.text)}</span>
+      ${editMode ? `<button class="btn sm danger" onclick="deleteSkill(${s.id})">Delete</button>` : ''}
+    </li>`).join('');
+  return `
+    <div class="eyebrow">02 · About Me</div>
+    <h1 class="title">About Me</h1>
+    <div class="sec-head" style="margin-top:20px;">
+      <h2>Career Objective</h2>
+      ${editMode ? `<button class="btn sm" onclick="editBio()">✎ Edit</button>` : ''}
+    </div>
+    <div class="card"><p style="margin:0;font-size:14.5px;line-height:1.75;color:var(--ink-soft);">${escapeHtml(DATA.about.bio)}</p></div>
+
+    <div class="subsection">
+      <div class="sec-head"><h2>Personal Skills</h2>${editMode ? `<button class="btn sm" onclick="addSkill()">+ Add Skill</button>` : ''}</div>
+      <div class="card"><ul style="margin:0;padding-left:18px;font-size:13.5px;">${skillsList || '<li>No skills added yet.</li>'}</ul></div>
+    </div>
+  `;
+}
+function editBio(){
+  openModal('Edit Career Objective', [{key:'bio', label:'Career Objective', type:'textarea'}], DATA.about, (vals)=>{
+    DATA.about.bio = vals.bio; saveData(); renderStage();
+  });
+}
+function addSkill(){
+  openModal('Add Skill', [{key:'text', label:'Skill'}], {}, (vals)=>{
+    if(!vals.text) return;
+    DATA.about.skills.push({id: nextId(DATA.about.skills), text: vals.text});
+    saveData(); renderStage();
+  });
+}
+function deleteSkill(id){
+  confirmDelete('Delete this skill?', ()=>{
+    DATA.about.skills = DATA.about.skills.filter(s=>s.id!==id);
+    saveData(); renderStage();
+  });
+}
+
+/* ---------- EDUCATION ---------- */
+function renderEducation(){
+  const cards = DATA.education.map(e=>`
+    <div class="card">
+      ${editMode ? `<div class="card-actions">
+        <button onclick="editEducation(${e.id})" title="Edit">✎</button>
+        <button class="del" onclick="deleteEducation(${e.id})" title="Delete">🗑</button>
+      </div>` : ''}
+      <h3>${escapeHtml(e.degree)}${e.field ? ' — '+escapeHtml(e.field) : ''}</h3>
+      <div class="meta">${escapeHtml(e.institution)} · ${escapeHtml(e.year)}</div>
+      ${e.note ? `<div class="sub">${escapeHtml(e.note)}</div>` : ''}
+    </div>`).join('');
+  return `
+    <div class="eyebrow">03 · Education</div>
+    <div class="sec-head"><h1 class="title" style="margin:0;">Education</h1>${editMode ? `<button class="btn primary sm" onclick="addEducation()">+ Add Degree</button>` : ''}</div>
+    <div style="margin-top:24px;">${cards || emptyState('No education records yet.')}</div>
+  `;
+}
+const eduFields = [
+  {key:'degree', label:'Degree (e.g. Ph.D., M.Tech, B.Tech)'},
+  {key:'field', label:'Specialization / Field'},
+  {key:'institution', label:'Institution / University'},
+  {key:'year', label:'Year of Completion'},
+  {key:'note', label:'Note (e.g. thesis title)', type:'textarea'}
+];
+function addEducation(){
+  openModal('Add Education', eduFields, {}, vals=>{
+    DATA.education.unshift({id: nextId(DATA.education), ...vals});
+    saveData(); renderStage();
+  });
+}
+function editEducation(id){
+  const item = DATA.education.find(e=>e.id===id);
+  openModal('Edit Education', eduFields, item, vals=>{
+    Object.assign(item, vals); saveData(); renderStage();
+  });
+}
+function deleteEducation(id){
+  confirmDelete('Delete this education entry?', ()=>{
+    DATA.education = DATA.education.filter(e=>e.id!==id); saveData(); renderStage();
+  });
+}
+
+/* ---------- TEACHING ---------- */
+function renderTeaching(){
+  const posCards = DATA.teachingPositions.map(t=>`
+    <div class="card">
+      ${editMode ? `<div class="card-actions">
+        <button onclick="editTeaching(${t.id})">✎</button>
+        <button class="del" onclick="deleteTeaching(${t.id})">🗑</button>
+      </div>` : ''}
+      <h3>${escapeHtml(t.role)}</h3>
+      <div class="meta">${escapeHtml(t.institution)}</div>
+      <div class="sub">${escapeHtml(t.duration)}</div>
+    </div>`).join('');
+
+  const subjChips = DATA.subjects.map(s=>`
+    <span class="chip">${escapeHtml(s.text)} ${editMode ? `<span class="x" onclick="deleteSubject(${s.id})">✕</span>` : ''}</span>`).join('');
+
+  return `
+    <div class="eyebrow">04 · Teaching Experience</div>
+    <div class="sec-head"><h1 class="title" style="margin:0;">Teaching Experience</h1>${editMode ? `<button class="btn primary sm" onclick="addTeaching()">+ Add Position</button>` : ''}</div>
+    <div style="margin-top:24px;">${posCards || emptyState('No teaching positions yet.')}</div>
+
+    <div class="subsection">
+      <div class="sec-head"><h2>Subjects Handled (B.Tech / M.Tech)</h2></div>
+      <div class="chip-row">${subjChips}${editMode ? `<button class="chip-add" onclick="addSubject()">+ Add Subject</button>` : ''}</div>
+    </div>
+  `;
+}
+const teachFields = [
+  {key:'role', label:'Role / Designation'},
+  {key:'institution', label:'Institution'},
+  {key:'duration', label:'Duration (e.g. Jan 2023 – Present)'}
+];
+function addTeaching(){
+  openModal('Add Teaching Position', teachFields, {}, vals=>{
+    DATA.teachingPositions.unshift({id: nextId(DATA.teachingPositions), ...vals});
+    saveData(); renderStage();
+  });
+}
+function editTeaching(id){
+  const item = DATA.teachingPositions.find(t=>t.id===id);
+  openModal('Edit Teaching Position', teachFields, item, vals=>{ Object.assign(item, vals); saveData(); renderStage(); });
+}
+function deleteTeaching(id){
+  confirmDelete('Delete this position?', ()=>{
+    DATA.teachingPositions = DATA.teachingPositions.filter(t=>t.id!==id); saveData(); renderStage();
+  });
+}
+function addSubject(){
+  const text = prompt('Subject name:');
+  if(text){ DATA.subjects.push({id: nextId(DATA.subjects), text}); saveData(); renderStage(); }
+}
+function deleteSubject(id){
+  DATA.subjects = DATA.subjects.filter(s=>s.id!==id); saveData(); renderStage();
+}
+
+/* ---------- RESEARCH INTERESTS ---------- */
+function renderResearch(){
+  const chips = DATA.researchInterests.map(r=>`
+    <span class="chip">${escapeHtml(r.text)} ${editMode ? `<span class="x" onclick="deleteInterest(${r.id})">✕</span>` : ''}</span>`).join('');
+  return `
+    <div class="eyebrow">05 · Research Interests</div>
+    <h1 class="title">Research Interests</h1>
+    <div class="lede">Core areas of research focus and academic interest.</div>
+    <div class="chip-row">${chips}${editMode ? `<button class="chip-add" onclick="addInterest()">+ Add Interest</button>` : ''}</div>
+  `;
+}
+function addInterest(){
+  const text = prompt('Research interest:');
+  if(text){ DATA.researchInterests.push({id: nextId(DATA.researchInterests), text}); saveData(); renderStage(); }
+}
+function deleteInterest(id){
+  DATA.researchInterests = DATA.researchInterests.filter(r=>r.id!==id); saveData(); renderStage();
+}
+
+/* ---------- PUBLICATIONS ---------- */
+function renderPublications(){
+  const cards = DATA.publications.map(p=>`
+    <div class="card">
+      ${editMode ? `<div class="card-actions">
+        <button onclick="editPublication(${p.id})">✎</button>
+        <button class="del" onclick="deletePublication(${p.id})">🗑</button>
+      </div>` : ''}
+      <span class="tag ${p.type==='SCI'?'sci':p.type==='Scopus'?'scopus':'other'}">${escapeHtml(p.type)}</span>
+      <h3 style="margin-top:8px;">${escapeHtml(p.title)}</h3>
+      ${p.venue ? `<div class="meta">${escapeHtml(p.venue)}</div>` : ''}
+      ${p.details ? `<div class="meta">${escapeHtml(p.details)}</div>` : ''}
+      ${p.doi ? `<div class="doi">DOI: ${escapeHtml(p.doi)}</div>` : ''}
+    </div>`).join('');
+  return `
+    <div class="eyebrow">06 · Publications</div>
+    <div class="sec-head"><h1 class="title" style="margin:0;">Research Publications</h1>${editMode ? `<button class="btn primary sm" onclick="addPublication()">+ Add Publication</button>` : ''}</div>
+    <div class="lede">Journal articles indexed in SCI / Scopus and other peer-reviewed venues.</div>
+    <div>${cards || emptyState('No publications added yet.')}</div>
+  `;
+}
+const pubFields = [
+  {key:'title', label:'Paper Title', type:'textarea'},
+  {key:'venue', label:'Journal Name'},
+  {key:'details', label:'Volume / Issue / Pages / Year'},
+  {key:'doi', label:'DOI (optional)'},
+  {key:'type', label:'Indexing', type:'select', options:['SCI','Scopus','Other']}
+];
+function addPublication(){
+  openModal('Add Publication', pubFields, {type:'SCI'}, vals=>{
+    DATA.publications.unshift({id: nextId(DATA.publications), ...vals});
+    saveData(); renderStage();
+  });
+}
+function editPublication(id){
+  const item = DATA.publications.find(p=>p.id===id);
+  openModal('Edit Publication', pubFields, item, vals=>{ Object.assign(item, vals); saveData(); renderStage(); });
+}
+function deletePublication(id){
+  confirmDelete('Delete this publication?', ()=>{
+    DATA.publications = DATA.publications.filter(p=>p.id!==id); saveData(); renderStage();
+  });
+}
+
+/* ---------- CONFERENCES ---------- */
+function renderConferences(){
+  const cards = DATA.conferences.map(c=>`
+    <div class="card">
+      ${editMode ? `<div class="card-actions">
+        <button onclick="editConference(${c.id})">✎</button>
+        <button class="del" onclick="deleteConference(${c.id})">🗑</button>
+      </div>` : ''}
+      <h3>${escapeHtml(c.title)}</h3>
+      ${c.place ? `<div class="meta">${escapeHtml(c.place)}</div>` : ''}
+      <div class="sub">${escapeHtml(c.date)}</div>
+    </div>`).join('');
+  return `
+    <div class="eyebrow">07 · Conference Papers</div>
+    <div class="sec-head"><h1 class="title" style="margin:0;">Conference Papers & Symposia</h1>${editMode ? `<button class="btn primary sm" onclick="addConference()">+ Add Entry</button>` : ''}</div>
+    <div style="margin-top:24px;">${cards || emptyState('No conference entries yet.')}</div>
+  `;
+}
+const confFields = [
+  {key:'title', label:'Title / Event Name'},
+  {key:'place', label:'Venue / Organizer'},
+  {key:'date', label:'Date'}
+];
+function addConference(){
+  openModal('Add Conference / Symposium', confFields, {}, vals=>{
+    DATA.conferences.unshift({id: nextId(DATA.conferences), ...vals}); saveData(); renderStage();
+  });
+}
+function editConference(id){
+  const item = DATA.conferences.find(c=>c.id===id);
+  openModal('Edit Entry', confFields, item, vals=>{ Object.assign(item, vals); saveData(); renderStage(); });
+}
+function deleteConference(id){
+  confirmDelete('Delete this entry?', ()=>{
+    DATA.conferences = DATA.conferences.filter(c=>c.id!==id); saveData(); renderStage();
+  });
+}
+
+/* ---------- PROJECTS ---------- */
+function renderProjects(){
+  const cards = DATA.projects.map(p=>`
+    <div class="card">
+      ${editMode ? `<div class="card-actions">
+        <button onclick="editProject(${p.id})">✎</button>
+        <button class="del" onclick="deleteProject(${p.id})">🗑</button>
+      </div>` : ''}
+      <span class="tag other">${escapeHtml(p.type)}</span>
+      <h3 style="margin-top:8px;">${escapeHtml(p.title)}</h3>
+      <div class="meta">${escapeHtml(p.detail)}</div>
+    </div>`).join('');
+  return `
+    <div class="eyebrow">08 · Projects & Patents</div>
+    <h1 class="title">Projects & Patents</h1>
+
+    <div class="sec-head"><h2>Student Projects Guided</h2>${editMode ? `<button class="btn sm" onclick="editProjectStats()">✎ Edit Counts</button>` : ''}</div>
+    <div class="grid2" style="margin-bottom:30px;">
+      <div class="stat-card"><div class="num">${DATA.projectStats.btech}</div><div class="lbl">B.Tech Projects Guided</div></div>
+      <div class="stat-card"><div class="num">${DATA.projectStats.mtech}</div><div class="lbl">M.Tech Projects Guided</div></div>
+    </div>
+
+    <div class="sec-head"><h2>Funded Projects, Patents & Named Student Projects</h2>${editMode ? `<button class="btn primary sm" onclick="addProject()">+ Add Entry</button>` : ''}</div>
+    <div>${cards || emptyState('No project/patent entries yet.')}</div>
+  `;
+}
+const projFields = [
+  {key:'title', label:'Title'},
+  {key:'type', label:'Type', type:'select', options:['Patent','Funded Project','Student Project','Other']},
+  {key:'detail', label:'Details (dates, application no., outcome, etc.)', type:'textarea'}
+];
+function addProject(){
+  openModal('Add Project / Patent', projFields, {type:'Student Project'}, vals=>{
+    DATA.projects.unshift({id: nextId(DATA.projects), ...vals}); saveData(); renderStage();
+  });
+}
+function editProject(id){
+  const item = DATA.projects.find(p=>p.id===id);
+  openModal('Edit Entry', projFields, item, vals=>{ Object.assign(item, vals); saveData(); renderStage(); });
+}
+function deleteProject(id){
+  confirmDelete('Delete this entry?', ()=>{
+    DATA.projects = DATA.projects.filter(p=>p.id!==id); saveData(); renderStage();
+  });
+}
+function editProjectStats(){
+  openModal('Edit Project Counts', [
+    {key:'btech', label:'B.Tech Projects Guided (number)'},
+    {key:'mtech', label:'M.Tech Projects Guided (number)'}
+  ], DATA.projectStats, vals=>{
+    DATA.projectStats.btech = vals.btech; DATA.projectStats.mtech = vals.mtech;
+    saveData(); renderStage();
+  });
+}
+
+/* ---------- AWARDS ---------- */
+function renderAwards(){
+  const cards = DATA.awards.map(a=>`
+    <div class="card">
+      ${editMode ? `<div class="card-actions">
+        <button onclick="editAward(${a.id})">✎</button>
+        <button class="del" onclick="deleteAward(${a.id})">🗑</button>
+      </div>` : ''}
+      <h3>${escapeHtml(a.title)}</h3>
+      ${a.year ? `<div class="meta">${escapeHtml(a.year)}</div>` : ''}
+    </div>`).join('');
+
+  const fdpCards = DATA.fdps.map(f=>`
+    <div class="card">
+      ${editMode ? `<div class="card-actions">
+        <button onclick="editFdp(${f.id})">✎</button>
+        <button class="del" onclick="deleteFdp(${f.id})">🗑</button>
+      </div>` : ''}
+      <h3>${escapeHtml(f.text)}</h3>
+      <div class="meta">${escapeHtml(f.place)}</div>
+      <div class="sub">${escapeHtml(f.date)}</div>
+    </div>`).join('');
+
+  return `
+    <div class="eyebrow">09 · Awards & Achievements</div>
+    <div class="sec-head"><h1 class="title" style="margin:0;">Awards & Achievements</h1>${editMode ? `<button class="btn primary sm" onclick="addAward()">+ Add Award</button>` : ''}</div>
+    <div style="margin-top:24px;">${cards || emptyState('No awards added yet.')}</div>
+
+    <div class="subsection">
+      <div class="sec-head"><h2>Faculty Development Programs Attended</h2>${editMode ? `<button class="btn sm" onclick="addFdp()">+ Add FDP</button>` : ''}</div>
+      ${fdpCards || emptyState('No FDPs added yet.')}
+    </div>
+  `;
+}
+const awardFields = [{key:'title', label:'Award / Achievement'}, {key:'year', label:'Year'}];
+function addAward(){
+  openModal('Add Award', awardFields, {}, vals=>{
+    DATA.awards.unshift({id: nextId(DATA.awards), ...vals}); saveData(); renderStage();
+  });
+}
+function editAward(id){
+  const item = DATA.awards.find(a=>a.id===id);
+  openModal('Edit Award', awardFields, item, vals=>{ Object.assign(item, vals); saveData(); renderStage(); });
+}
+function deleteAward(id){
+  confirmDelete('Delete this award?', ()=>{ DATA.awards = DATA.awards.filter(a=>a.id!==id); saveData(); renderStage(); });
+}
+const fdpFields = [{key:'text', label:'Programme Title'},{key:'place', label:'Host Institution'},{key:'date', label:'Dates'}];
+function addFdp(){
+  openModal('Add Faculty Development Programme', fdpFields, {}, vals=>{
+    DATA.fdps.unshift({id: nextId(DATA.fdps), ...vals}); saveData(); renderStage();
+  });
+}
+function editFdp(id){
+  const item = DATA.fdps.find(f=>f.id===id);
+  openModal('Edit FDP', fdpFields, item, vals=>{ Object.assign(item, vals); saveData(); renderStage(); });
+}
+function deleteFdp(id){
+  confirmDelete('Delete this FDP entry?', ()=>{ DATA.fdps = DATA.fdps.filter(f=>f.id!==id); saveData(); renderStage(); });
+}
+
+/* ---------- GOOGLE SCHOLAR ---------- */
+function renderScholar(){
+  const s = DATA.scholar;
+  return `
+    <div class="eyebrow">10 · Google Scholar Profile</div>
+    <div class="sec-head"><h1 class="title" style="margin:0;">Google Scholar & Researcher IDs</h1>${editMode ? `<button class="btn primary sm" onclick="editScholar()">✎ Edit</button>` : ''}</div>
+
+    <div class="grid3" style="margin:26px 0;">
+      <div class="stat-card"><div class="num">${escapeHtml(s.citations)}</div><div class="lbl">Citations</div></div>
+      <div class="stat-card"><div class="num">${escapeHtml(s.hIndex)}</div><div class="lbl">h-index</div></div>
+      <div class="stat-card"><div class="num">${escapeHtml(s.i10Index)}</div><div class="lbl">i10-index</div></div>
+    </div>
+
+    <div class="card">
+      <table class="info-table">
+        <tr><td>Scopus Author ID</td><td class="mono">${escapeHtml(s.scopusId)||'—'}</td></tr>
+        <tr><td>Researcher ID</td><td class="mono">${escapeHtml(s.researcherId)||'—'}</td></tr>
+        <tr><td>ORCID</td><td class="mono">${escapeHtml(s.orcid)||'—'}</td></tr>
+        <tr><td>Google Scholar</td><td>${s.googleScholarUrl ? `<a href="${s.googleScholarUrl}" target="_blank">${s.googleScholarUrl}</a>` : 'Not linked yet — add your profile URL.'}</td></tr>
+      </table>
+    </div>
+  `;
+}
+function editScholar(){
+  openModal('Edit Google Scholar Profile', [
+    {key:'scopusId', label:'Scopus Author ID'},
+    {key:'researcherId', label:'Researcher ID'},
+    {key:'orcid', label:'ORCID (numbers only)'},
+    {key:'googleScholarUrl', label:'Google Scholar Profile URL'},
+    {key:'citations', label:'Citations'},
+    {key:'hIndex', label:'h-index'},
+    {key:'i10Index', label:'i10-index'}
+  ], DATA.scholar, vals=>{ DATA.scholar = {...DATA.scholar, ...vals}; saveData(); renderStage(); });
+}
+
+/* ---------- CONTACT ---------- */
+function renderContact(){
+  const c = DATA.contact;
+  return `
+    <div class="eyebrow">11 · Contact & Resume</div>
+    <div class="sec-head"><h1 class="title" style="margin:0;">Contact Information</h1>${editMode ? `<button class="btn primary sm" onclick="editContact()">✎ Edit</button>` : ''}</div>
+
+    <div class="card" style="margin-top:24px;">
+      <table class="info-table">
+        <tr><td>Email</td><td><a href="mailto:${c.email}">${escapeHtml(c.email)||'—'}</a></td></tr>
+        <tr><td>Phone</td><td>${escapeHtml(c.phone)||'—'}</td></tr>
+        <tr><td>Address</td><td>${escapeHtml(c.address)||'—'}</td></tr>
+        <tr><td>GitHub</td><td>${c.github ? `<a href="${c.github}" target="_blank">${c.github}</a>` : 'Not added'}</td></tr>
+        <tr><td>LinkedIn</td><td>${c.linkedin ? `<a href="${c.linkedin}" target="_blank">${c.linkedin}</a>` : 'Not added'}</td></tr>
+        <tr><td>Resume (PDF)</td><td>${c.resumeUrl ? `<a href="${c.resumeUrl}" target="_blank">${c.resumeUrl}</a>` : 'Not added'}</td></tr>
+      </table>
+    </div>
+    <div class="lede" style="margin-top:16px;">To publish your resume, place a file named <code>resume.pdf</code> next to this <code>index.html</code>, or edit the Resume URL above to point to any link (Google Drive, Dropbox, etc.).</div>
+  `;
+}
+function editContact(){
+  openModal('Edit Contact Information', [
+    {key:'email', label:'Email'},
+    {key:'phone', label:'Phone'},
+    {key:'address', label:'Address', type:'textarea'},
+    {key:'github', label:'GitHub URL'},
+    {key:'linkedin', label:'LinkedIn URL'},
+    {key:'resumeUrl', label:'Resume PDF URL / filename'}
+  ], DATA.contact, vals=>{ DATA.contact = {...DATA.contact, ...vals}; saveData(); renderStage(); });
+}
+
+/* ---------- HELPERS ---------- */
+function emptyState(msg){ return `<div class="empty">${msg}${editMode ? ' Use the button above to add one.' : ''}</div>`; }
+
+/* ---------- DATA IMPORT / EXPORT / RESET ---------- */
+function exportData(){
+  const blob = new Blob([JSON.stringify(DATA, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'faculty-site-data.json'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('Exported JSON');
+}
+function importPrompt(){
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'application/json';
+  input.onchange = (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev)=>{
+      try{
+        const parsed = JSON.parse(ev.target.result);
+        DATA = parsed; saveData(); renderNav(); renderStage();
+        showToast('Data imported');
+      }catch(err){ alert('That file is not valid JSON.'); }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+function resetPrompt(){
+  if(confirm('Reset all content back to the original resume data? This cannot be undone.')){
+    DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    saveData(); renderNav(); renderStage();
+  }
+}
+
+/* =========================================================
+   INIT
+   ========================================================= */
+renderNav();
+renderStage();
+</script>
+</body>
+</html>
