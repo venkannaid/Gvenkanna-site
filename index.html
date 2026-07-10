@@ -283,6 +283,27 @@ footer.site-foot{margin-top:60px;padding-top:20px;border-top:1px solid var(--lin
    DATA LAYER
    ========================================================= */
 const STORAGE_KEY = 'facultySiteData_v1';
+const ADMIN_STORAGE_KEY = 'facultySiteAdmin_v1';
+const ADMIN_SECRET = "venkanna2026";   // <-- change this to your own secret word
+
+function checkAdminUnlock(){
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('edit');
+  if(key && key === ADMIN_SECRET){
+    localStorage.setItem(ADMIN_STORAGE_KEY, 'true');
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+  }
+  return localStorage.getItem(ADMIN_STORAGE_KEY) === 'true';
+}
+function lockAdmin(){
+  if(confirm('Lock admin access on this browser? You will need your secret link to unlock it again.')){
+    localStorage.removeItem(ADMIN_STORAGE_KEY);
+    editMode = false;
+    document.getElementById('railFoot').style.display = 'none';
+    renderStage();
+  }
+}
+const isAdmin = checkAdminUnlock();
 
 const DEFAULT_DATA = {
   profile: {
