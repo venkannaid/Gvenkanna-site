@@ -533,7 +533,7 @@ function renderHome(){
     <div class="hero-card">
       ${editBtn}
       <div class="hero-top">
-        <div class="avatar">${escapeHtml(p.photoInitials||'??')}</div>
+       <img class="avatar" src="photo.jpg" alt="${escapeHtml(p.name)}" style="width:84px;height:84px;object-fit:cover;">
         <div>
           <h1 class="hero-name">${escapeHtml(p.name)}</h1>
           <div class="hero-role">${escapeHtml(p.designation)} · ${escapeHtml(p.department)}</div>
