@@ -270,6 +270,9 @@ footer.site-foot{margin-top:60px;padding-top:20px;border-top:1px solid var(--lin
       </div>
       <div class="hint" style="margin-top:10px;"><a href="#" onclick="lockAdmin();return false;" style="color:#B9B196;">Lock admin access on this browser</a></div>
     </div>
+    <div style="padding:10px 22px 18px;text-align:center;">
+      <a href="#" onclick="adminLoginPrompt();return false;" style="font-size:10px;color:#645E48;text-decoration:none;">Admin</a>
+    </div>
   </aside>
 
   <main class="stage" id="stage"></main>
@@ -284,23 +287,39 @@ footer.site-foot{margin-top:60px;padding-top:20px;border-top:1px solid var(--lin
    ========================================================= */
 const STORAGE_KEY = 'facultySiteData_v1';
 const ADMIN_STORAGE_KEY = 'facultySiteAdmin_v1';
-const ADMIN_SECRET = "venkanna2026";   // <-- change this to your own secret word
+
+/* ============ ADMIN ACCESS (change this secret word to your own) ============ */
+const ADMIN_SECRET = "ddsvddsv";   // <-- your private edit-mode password
+/* Visit your site once as: yoursite/index.html?edit=venkanna2026
+   That unlocks the Edit Mode button permanently on THIS browser only.
+   Everyone else who visits the normal link never sees the Edit Mode button. */
 
 function checkAdminUnlock(){
   const params = new URLSearchParams(window.location.search);
   const key = params.get('edit');
   if(key && key === ADMIN_SECRET){
     localStorage.setItem(ADMIN_STORAGE_KEY, 'true');
+    // clean the secret word out of the visible URL bar
     window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
   }
   return localStorage.getItem(ADMIN_STORAGE_KEY) === 'true';
 }
 function lockAdmin(){
-  if(confirm('Lock admin access on this browser? You will need your secret link to unlock it again.')){
+  if(confirm('Lock admin access on this browser? You will need your password again to unlock it.')){
     localStorage.removeItem(ADMIN_STORAGE_KEY);
     editMode = false;
     document.getElementById('railFoot').style.display = 'none';
     renderStage();
+  }
+}
+function adminLoginPrompt(){
+  const pwd = prompt('Enter admin password:');
+  if(pwd === null) return;
+  if(pwd === ADMIN_SECRET){
+    localStorage.setItem(ADMIN_STORAGE_KEY, 'true');
+    location.reload();
+  } else {
+    alert('Incorrect password.');
   }
 }
 const isAdmin = checkAdminUnlock();
@@ -556,7 +575,7 @@ function renderHome(){
     <div class="hero-card">
       ${editBtn}
       <div class="hero-top">
-       <img class="avatar" src="photo.jpg" alt="${escapeHtml(p.name)}" style="width:84px;height:84px;object-fit:cover;">
+        <div class="avatar">${escapeHtml(p.photoInitials||'??')}</div>
         <div>
           <h1 class="hero-name">${escapeHtml(p.name)}</h1>
           <div class="hero-role">${escapeHtml(p.designation)} · ${escapeHtml(p.department)}</div>
